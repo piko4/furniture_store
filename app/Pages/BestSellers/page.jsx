@@ -5,7 +5,7 @@ import React from 'react'
 const bestsellers = () => {
   return (
     <div>
-        <Navbar/>
+       
         
       best
     </div>

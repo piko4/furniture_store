@@ -160,14 +160,16 @@ const Navbar = () => {
             {/* category navbar */}
             <nav nav className=' border-gray-200 bg-gray-700' >
                 <div className='flex py-2 px-4: justify-center'>
-                    <Link className=' py-2 px-4 text-white' href='/Pages/Products' >Foldables</Link>
-                    <Link className=' py-2 px-4  text-white' href='/Pages/' >Sofas</Link>
-                    <Link className=' py-2 px-4  text-white' href='/Pages/' >Home Decor</Link>
-                    <Link className=' py-2 px-4  text-white' href='/Pages/' >Bedroom</Link>
-                    <Link className=' py-2 px-4  text-white' href='/Pages/' >Kitchen</Link>
-                    <Link className=' py-2 px-4  text-white' href='/Pages/' >Office</Link>
-                    <Link className=' py-2 px-4  text-white' href='/Pages/' >Wallpapers</Link>
-                    <Link className=' py-2 px-4  text-white' href='/Pages/' >Lightings</Link>
+                    <Link className=' py-2 px-4  text-white' href='/Pages/Products/Sofas' >Sofas</Link>
+                    <Link className=' py-2 px-4 text-white' href='/Pages/Products/Foldables' >Foldables</Link>
+                    <Link className=' py-2 px-4  text-white' href='/Pages/Products/Tables' >Tables</Link>
+                    <Link className=' py-2 px-4  text-white' href='/Pages/Products/Bedroom' >Bedroom</Link>
+                    <Link className=' py-2 px-4  text-white' href='/Pages/Products/Kitchen' >Kitchen</Link>
+                    <Link className=' py-2 px-4  text-white' href='/Pages/Products/Office' >Office</Link>
+                    <Link className=' py-2 px-4  text-white' href='/Pages/Products/Wallpapers' >Wallpapers</Link>
+                    <Link className=' py-2 px-4  text-white' href='/Pages/Products/Lightings' >Lightings</Link>
+                    <Link className=' py-2 px-4  text-white' href='/Pages/Products/floor' >Floor</Link>
+
                 </div>
             </nav>
 

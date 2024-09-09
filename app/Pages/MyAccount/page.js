@@ -56,7 +56,7 @@ const page = () => {
       </div>
 
       {/* -----Utility links------ */}
-      <div className=' grid gap-2 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4'>
+      <div className='grid gap-2 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4'>
 
 
 
@@ -98,7 +98,7 @@ const page = () => {
 
 
       </div>
-
+<hr />
     </div>
   )
 }

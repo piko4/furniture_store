@@ -4,7 +4,7 @@ const Headings = () => {
     return (
         <div>
             {/* banner */}
-            <section className="bg-white dark:bg-gray-900">
+            <section className="bg-white dark:bg-gray-800">
                 <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
                     <div className="mr-auto place-self-center lg:col-span-7">
                         <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">The best furniture for your home</h1>
@@ -22,6 +22,22 @@ const Headings = () => {
                     </div>
                 </div>
             </section>
+
+             {/* image carousel (image slider) */}
+             <div class="grid grid-cols-2 gap-2 bg-gray-600 ">
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg" alt="" />
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="" />
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="" />
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="" />
+                </div>
+            </div>
 
 
             <div className='py-16 w-full inline-flex justify-center bg-gray-800'>

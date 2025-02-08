@@ -1,17 +1,51 @@
 "use client"
 import Link from 'next/link'
 import Footer from './Footer'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import App from 'next/app';
 import { useSession, signIn, signOut } from "next-auth/react"
 
 import bestsellers from '../Pages/BestSellers/page';
 import { redirect } from 'next/navigation';
+import axios from 'axios';
 
 const Navbar = () => {
+
+    const { data: session } = useSession();
+
+
+    // ----------profile dropdown mechanism 
     const [isVisible, setIsVisible] = useState(false);
 
-    const { data: session } = useSession()
+
+
+
+    //    ----------------fetching user------------------ 
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get("http://localhost:8070/ACCOUNT-SERVICE/api/user/user", {
+                    withCredentials: true,
+                });
+                setUser(response.data); 
+            } catch (error) {
+                console.error("Error fetching user:", error);
+            }
+        };
+
+        fetchUser();
+    }, [user]); // 🔥 Re-run when `user` changes
+
+
+
+    //--------------logout user---------------------------
+    const handleLogout = async () => {
+        await axios.post("http://localhost:8070/ACCOUNT-SERVICE/api/user/logout", {}, { withCredentials: true });
+        alert("Logged out successfully!");
+        // window.location.reload();
+    };
 
     return (
         <div>
@@ -61,10 +95,10 @@ const Navbar = () => {
                             </ul>
                         </div>
 
-                        {/* account button/dropdown */}
+                        {/* -------------------------account button/ Login button visibility using session---------------------------- */}
                         <div className={'flex items-center lg:space-x-2'}>
 
-                            {session &&
+                            {(user || session)  &&
                                 <>
                                     {/* Cart button */}
                                     <Link href='/Pages/my_cart' id="myCartDropdownButton1" className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white">
@@ -96,7 +130,7 @@ const Navbar = () => {
                                 </>
                             }
 
-                            {!session &&
+                            {!(user || session) &&
                                 <>
                                     {/* Login button */}
                                     <Link rel="stylesheet" href="/Pages/Login" className=' text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2 me-2 my-[1px] dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700'>Login </Link>
@@ -115,7 +149,7 @@ const Navbar = () => {
                                 </ul>
                                 {/* Logout */}
                                 <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    <button onClick={() => signOut({ callbackUrl: '/' })} title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-red-500  " > Log Out </button>
+                                    <button onClick={()=>{handleLogout(),signOut()}} title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-red-500  " > Log Out </button>
                                 </div>
                             </div>
 
@@ -182,11 +216,11 @@ const Navbar = () => {
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                 </svg>
                             </div>
-                            
 
-                            <input type="search" id="default-search" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search.."  />
+
+                            <input type="search" id="default-search" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search.." />
                             <button type="submit" class=" text-white absolute end-1.5 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-                            
+
                         </div>
                     </form>
 

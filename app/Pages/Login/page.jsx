@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useEffect } from 'react'
 import axios from 'axios'
@@ -46,13 +46,47 @@ const page = () => {
     }, [session]);
 
 
+    // ------------------------*** login using credentials---------------------------------
+    const [user, setUser] = useState(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        try {
+            await axios.post("http://localhost:8070/ACCOUNT-SERVICE/api/user/login", { email, password }, { withCredentials: true });
+
+            // Fetch user session immediately after login and update state
+            const userResponse = await axios.get("http://localhost:8070/ACCOUNT-SERVICE/api/user/user", { withCredentials: true });
+            setUser(userResponse.data); // 🔥 Update navbar instantly
+
+            router.push("/"); // Redirect to homepage
+
+            // Wait 2 seconds before refreshing the page
+            setTimeout(() => {
+                window.location.reload(); // Refresh the page
+            }, 1000); // 2000 milliseconds = 2 seconds    
+        } catch (error) {
+            console.error("Login error:", error); alert("invalid email or password !!")
+        }
+    };
 
 
-    // redirection---------------------------------
-    if (session) {
-        const router = useRouter()
-        router.push('/')
-    }
+
+
+
+
+
+    // --------------------------redirection to homepage if a user is logged in---------------------------------
+    const router = useRouter();
+
+    useEffect(() => {
+        if (user || session) {
+            router.replace("/"); // Redirect to home if already logged in
+        }
+    }, [user, session, router]);
+
 
     // -------------------------------------------------------------------------------------
     return (
@@ -68,14 +102,15 @@ const page = () => {
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                                 Log in to your account
                             </h1>
-                            <form className="space-y-4 md:space-y-6" action="#">
+                            {/* ---------------------------------Login form------------------------------- */}
+                            <form onSubmit={handleLogin} className="space-y-4 md:space-y-6" >
                                 <div>
                                     <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                                    <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
+                                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
                                 </div>
                                 <div>
                                     <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                                    <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-start">
@@ -88,7 +123,9 @@ const page = () => {
                                     </div>
                                     <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-blue-500">Forgot password?</a>
                                 </div>
+
                                 <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Log in</button>
+
                                 <div className='inline flex'>
 
                                     {/* ------------- sign in using github ------------- */}
@@ -110,6 +147,7 @@ const page = () => {
                                     Don’t have an account yet? <Link href="/Pages/SignIn" className="font-medium text-primary-600 hover:underline dark:text-blue-500">Sign in</Link>
                                 </p>
                             </form>
+                            {/* ------------------------------Login form end--------------------------------------------- */}
                         </div>
                     </div>
                 </div>

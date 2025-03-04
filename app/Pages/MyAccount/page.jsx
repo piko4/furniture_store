@@ -25,7 +25,7 @@ const page = () => {
   }, [status]);
 
 
-  // redirection to home page if user session is unavailable 
+  //-------------------- redirection to home page if user session is unavailable ----------------------
   const router = useRouter();
 
   useEffect(() => {
@@ -40,15 +40,17 @@ const page = () => {
     return <p>Loading...</p>;
   }
 
+  // ------------------------ hide un hide edit account data form------------------
+
+  const [isVisible, setIsVisible] = useState(false);
 
 
 
-
-
+  // ----------------------------------------------END-------------------------------------------------------
   return (
     <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-8">
       <div class="mx-auto max-w-screen-lg px-4 2xl:px-0">
-        <nav class="mb-4 flex" aria-label="Breadcrumb">
+        {/* <nav class="mb-4 flex" aria-label="Breadcrumb">
           <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
             <li class="inline-flex items-center">
               <a href="#" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white">
@@ -75,7 +77,7 @@ const page = () => {
               </div>
             </li>
           </ol>
-        </nav>
+        </nav> */}
         <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl md:mb-6">General overview</h2>
         <div class="grid grid-cols-2 gap-6 border-b border-t border-gray-200 py-4 dark:border-gray-700 md:py-8 lg:grid-cols-4 xl:gap-16">
           <div>
@@ -167,7 +169,7 @@ const page = () => {
 
 
         {/* ----------------------------------* * * account profile * * * ---------------------------------------- */}
-        
+
         <div class="py-4 md:py-8">
           <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
             <div class="space-y-4">
@@ -188,7 +190,7 @@ const page = () => {
                   <svg class="hidden h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 lg:inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5" />
                   </svg>
-                  2 Miles Drive, NJ 071, New York, United States of America
+                  {user?.address}
                 </dd>
               </dl>
               <dl>
@@ -197,7 +199,7 @@ const page = () => {
                   <svg class="hidden h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 lg:inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
                   </svg>
-                  9th St. PATH Station, New York, United States of America
+                 {user?.address}
                 </dd>
               </dl>
             </div>
@@ -221,10 +223,10 @@ const page = () => {
                   Herald Square, 2, New York, United States of America
                 </dd>
               </dl>
-              <dl>
+              {/* <dl>
                 <dt class="font-semibold text-gray-900 dark:text-white">My Companies</dt>
                 <dd class="text-gray-500 dark:text-gray-400">FLOWBITE LLC, Fiscal code: 18673557</dd>
-              </dl>
+              </dl> */}
               <dl>
                 <dt class="mb-1 font-semibold text-gray-900 dark:text-white">Payment Methods</dt>
                 <dd class="flex items-center space-x-4 text-gray-500 dark:text-gray-400">
@@ -242,7 +244,10 @@ const page = () => {
               </dl>
             </div>
           </div>
-          <button type="button" data-modal-target="accountInformationModal2" data-modal-toggle="accountInformationModal2" class="inline-flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:w-auto">
+
+          {/* -------------------------------------edit data button-------------------------------- */}
+
+          <button onClick={() => setIsVisible(true)} type="button" data-modal-target="accountInformationModal2" data-modal-toggle="accountInformationModal2" class="inline-flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:w-auto">
             <svg class="-ms-0.5 me-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"></path>
             </svg>
@@ -514,16 +519,16 @@ const page = () => {
         </div>
       </div>
 
-      {/* <!----------------------------------Edit Account Information Modal --> */}
+      {/* <!----------------------------------Edit Account Information Modal -------------------------------------------------------> */}
 
-      <div id="accountInformationModal2" tabindex="-1" aria-hidden="true" class="max-h-auto fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden antialiased md:inset-0">
+      <div id="accountInformationModal2" tabindex="-1" aria-hidden="true" className={`max-h-auto fixed left-0 right-0 top-0 z-50 ${isVisible ? "" : "hidden"} h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden antialiased md:inset-0 `}>
         <div class="max-h-auto relative max-h-full w-full max-w-lg p-4">
           {/* <!-- Modal content --> */}
           <div class="relative rounded-lg bg-white shadow dark:bg-gray-800">
             {/* <!-- Modal header --> */}
             <div class="flex items-center justify-between rounded-t border-b border-gray-200 p-4 dark:border-gray-700 md:p-5">
               <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Account Information</h3>
-              <button type="button" class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="accountInformationModal2">
+              <button onClick={() => setIsVisible(false)} type="button" class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="accountInformationModal2">
                 <svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                 </svg>
@@ -540,12 +545,12 @@ const page = () => {
 
                 <div class="col-span-2 sm:col-span-1">
                   <label for="full_name_info_modal" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Your Full Name* </label>
-                  <input type="text" id="full_name_info_modal" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Enter your first name" required />
+                  <input type="text" id="full_name_info_modal" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder={user?.username} required />
                 </div>
 
                 <div class="col-span-2 sm:col-span-1">
                   <label for="email_info_modal" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Your Email* </label>
-                  <input type="text" id="email_info_modal" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Enter your email here" required />
+                  <input type="text" id="email_info_modal" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder={user?.email} required />
                 </div>
 
                 <div class="col-span-2">
@@ -819,7 +824,7 @@ const page = () => {
                   <label for="address_billing_modal" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Delivery Address* </label>
                   <textarea id="address_billing_modal" rows="4" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Enter here your address"></textarea>
                 </div>
-                <div class="col-span-2 sm:col-span-1">
+                {/* <div class="col-span-2 sm:col-span-1">
                   <label for="company_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Company name </label>
                   <input type="text" id="company_name" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Flowbite LLC" />
                 </div>
@@ -827,11 +832,11 @@ const page = () => {
                 <div class="col-span-2 sm:col-span-1">
                   <label for="vat_number" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> VAT number </label>
                   <input type="text" id="vat_number" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="DE42313253" />
-                </div>
+                </div> */}
               </div>
               <div class="border-t border-gray-200 pt-4 dark:border-gray-700 md:pt-5">
-                <button type="submit" class="me-2 inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Save information</button>
-                <button type="button" data-modal-toggle="accountInformationModal2" class="me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Cancel</button>
+                <button type="submit" class="me-2 inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-primary-800">Save information</button>
+                <button onClick={() => setIsVisible(false)} type="button" data-modal-toggle="accountInformationModal2" class="me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Cancel</button>
               </div>
             </form>
           </div>

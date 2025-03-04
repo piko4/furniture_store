@@ -141,11 +141,11 @@ const Navbar = () => {
                             <div onMouseLeave={() => setIsVisible(false)} id="userDropdown1" className={isVisible ? 'absolute right-2 top-16 z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700' : 'hidden'} >
                                 <ul className="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
                                     <li><Link href="/Pages/MyAccount" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> My Account </Link></li>
-                                    <li><a href="#" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> My Orders </a></li>
-                                    <li><a href="#" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Settings </a></li>
-                                    <li><a href="#" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Favourites </a></li>
-                                    <li><a href="#" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Delivery Addresses </a></li>
-                                    <li><a href="#" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Billing Data </a></li>
+                                    <li><Link href="#" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> My Orders </Link></li>
+                                    <li><Link href="#" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Settings </Link></li>
+                                    <li><Link href="/Pages/Wishlist" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> My Wishlist </Link></li>
+                                    <li><Link href="#" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Delivery Addresses </Link></li>
+                                    <li><Link href="#" title="" className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Billing Data </Link></li>
                                 </ul>
                                 {/* Logout */}
                                 <div className="p-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -193,7 +193,7 @@ const Navbar = () => {
 
             </nav >
 
-            {/* category navbar */}
+            {/* ------------------------------category navbar------------------------------- */}
             <nav nav className=' border-gray-200 bg-gray-700' >
                 <div className='flex py-2 px-4: justify-center'>
                     <Link className=' py-2 px-4  text-white' href='/Pages/Products/Sofas' >Sofas</Link>

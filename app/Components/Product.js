@@ -2,9 +2,30 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 
 const Product = ({ category }) => {
+
+    // ----------------------fetch user--------------------------------------------
+    const [user, setUser] = useState(null);
+    const { data: session, status } = useSession(); // status can be "loading", "authenticated", or "unauthenticated"
+
+    // Fetch user only if NextAuth session is unauthenticated
+    useEffect(() => {
+        if (status === "authenticated") return; // If NextAuth session exists, no need to fetch backend user
+
+        if (status === "unauthenticated") {
+            axios
+                .get("http://localhost:8070/ACCOUNT-SERVICE/api/user/user", { withCredentials: true })
+                .then(response => setUser(response.data))
+                .catch(error => setUser(null)); // ⬅️ Ensure user state is set to null after logout
+        }
+    }, [status]);
+
+
+
+    // ------------------------------------------------fetch product-------------------------------------------
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -22,7 +43,24 @@ const Product = ({ category }) => {
     }, []);
 
 
+    // ------------------------------add to wishlist----------------------
 
+    const addToWishlist = async (productId) => {
+        try {
+            // Assuming you have the user ID in state or session
+            await axios.post("http://localhost:8070/ACCOUNT-SERVICE/api/wishlist/add", null, {
+                params: { userId: user?.id, productId },
+                withCredentials: true,
+            });
+            alert("Product added to wishlist!");
+        } catch (error) {
+            console.error("Error adding to wishlist:", error);
+        }
+    };
+
+
+
+    // ------------------------------------------------------------------
     return (
         <div>
             <div>
@@ -84,7 +122,6 @@ const Product = ({ category }) => {
 
                             {/* product cards */}
                             <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-2">
-
                                 {/* ----------------------------------------------------------product cards---------------------------------------------------------- */}
                                 {products.map((product) => (
 
@@ -115,7 +152,7 @@ const Product = ({ category }) => {
                                                         <div className="tooltip-arrow" data-popper-arrow=""></div>
                                                     </div>
 
-                                                    <button type="button" data-tooltip-target="tooltip-add-to-favorites" className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                    <button onClick={() => addToWishlist(product.id)} type="button" data-tooltip-target="tooltip-add-to-favorites" className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                                                         <span className="sr-only"> Add to Favorites </span>
                                                         <svg className="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />

@@ -59,6 +59,21 @@ const Product = ({ category }) => {
     };
 
 
+    //-----------------add product to cart----------------
+    const addToCart = async (productId) => {
+        try {
+            await axios.post("http://localhost:8070/ACCOUNT-SERVICE/api/cart/add", null, {
+                params: { userId: user?.id, productId },
+                withCredentials: true,
+            });
+            alert("Product added to Cart!");
+        } catch (error) {
+            console.error("Error adding to Cart:", error);
+        }
+    };
+
+    
+
 
     // ------------------------------------------------------------------
     return (
@@ -245,7 +260,7 @@ const Product = ({ category }) => {
 
                                                 <Link href={'/Pages/checkout'} className='ml-auto mt-2 text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'>BUY NOW</Link>
 
-                                                <button type="button" className=" inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                <button onClick={()=>addToCart(product.id)} type="button" className=" inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                                     <svg className="-ms-2 me-2 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
                                                     </svg>

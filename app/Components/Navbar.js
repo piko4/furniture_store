@@ -36,7 +36,7 @@ const Navbar = () => {
         };
 
         fetchUser();
-    }, [user]); // 🔥 Re-run when `user` changes
+    },[]); // 🔥 Re-run when `user` changes
 
 
 

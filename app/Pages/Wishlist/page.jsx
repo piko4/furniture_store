@@ -27,7 +27,7 @@ const page = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // This function fetches the user and then fetches product details in bulk
+    // ------------------------------------* * * This function fetches the user and then fetches product details in bulk * * * -----------------------
     const fetchWishlistProducts = async () => {
         try {
             // Fetch the user from your backend (which includes the wishlist)
@@ -85,6 +85,21 @@ const page = () => {
     };
 
 
+    //-----------------add product to cart----------------
+    const addToCart = async (productId) => {
+        try {
+            await axios.post("http://localhost:8070/ACCOUNT-SERVICE/api/cart/add", null, {
+                params: { userId: user?.id, productId },
+                withCredentials: true,
+            });
+            alert("Product added to Cart!");
+        } catch (error) {
+            console.error("Error adding to Cart:", error);
+        }
+    };
+
+
+
     // ---------------------------------------  
     return (<>
         <div className="min-h-screen dark:bg-gray-900">
@@ -93,7 +108,7 @@ const page = () => {
             <h2 className="text-2xl font-bold text-gray-200 bg-gray-800 p-4 rounded-lg shadow-md">
                 ⭐ My Wishlist
             </h2>
-<br />
+            <br />
             {loading ? (
                 <p>Loading wishlist...</p>
             ) : products.length === 0 ? (
@@ -139,7 +154,7 @@ const page = () => {
                                                 minimumFractionDigits: 0,
                                             }).format(product.price)}</span>
 
-                                            <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
+                                            <a onClick={()=>addToCart(product.id)} href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
                                             <button onClick={() => removeFromWishlist(user.id, product.id)} type="button" className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500">
                                                 <svg className="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
